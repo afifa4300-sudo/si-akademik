@@ -1,7 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Mahasiswa</title>
+</head>
 <body>
 
-<a href="?url=mahasiswa">Data Mahasiswa</a>
-<a href="?url=dosen">Data Dosen</a>
+<a href="<?= BASE_URL; ?>/dashboard">Dashboard</a> |
+<a href="<?= BASE_URL; ?>/mahasiswa">Data Mahasiswa</a> |
+<a href="<?= BASE_URL; ?>/dosen">Data Dosen</a> |
+<a href="<?= BASE_URL; ?>/logout">Logout</a>
 
 <br><br>
 
@@ -22,10 +29,12 @@
             <td><?= $mhs['nama']; ?></td>
             <td><?= $mhs['prodi']; ?></td>
             <td>
-                <a href="?url=mahasiswa/detail&nim=<?= $mhs['nim']; ?>">
+                <a href="<?= BASE_URL; ?>/mahasiswa/detail?nim=<?= $mhs['nim']; ?>">
                     Detail
                 </a>
             </td>
         </tr>
     <?php endforeach; ?>
 </table>
+</body>
+</html>

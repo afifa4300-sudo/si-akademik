@@ -5,8 +5,10 @@
 </head>
 <body>
 
-<a href="?url=mahasiswa">Data Mahasiswa</a>
-<a href="?url=dosen">Data Dosen</a>
+<a href="<?= BASE_URL; ?>/dashboard">Dashboard</a> |
+<a href="<?= BASE_URL; ?>/mahasiswa">Data Mahasiswa</a> |
+<a href="<?= BASE_URL; ?>/dosen">Data Dosen</a> |
+<a href="<?= BASE_URL; ?>/logout">Logout</a>
 
 <br><br>
 
@@ -16,12 +18,14 @@
     <tr>
         <th>NIDN</th>
         <th>Nama</th>
+        <th>Program Studi</th>
     </tr>
 
     <?php foreach ($dosen as $dsn): ?>
         <tr>
             <td><?= $dsn['nidn']; ?></td>
             <td><?= $dsn['nama']; ?></td>
+            <td><?= $dsn['prodi']; ?></td>
         </tr>
     <?php endforeach; ?>
 
