@@ -1,31 +1,49 @@
 <?php
 
-$url = $_GET['url'] ?? 'mahasiswa';
+session_start();
 
-switch ($url) {
+// Alamat dasar project ini (sesuaikan dengan nama folder di htdocs/XAMPP kamu)
+define('BASE_URL', '/si-akademik/public');
 
-    case 'mahasiswa':
-        require_once __DIR__ . '/../app/Controllers/MahasiswaController.php';
+// Load semua Middleware yang dibutuhkan
+require_once __DIR__ . '/../app/Middleware/AuthMiddleware.php';
 
-        $controller = new MahasiswaController();
-        $controller->index();
-        break;
+// Load daftar route
+$routes = require __DIR__ . '/../routes/web.php';
 
-    case 'mahasiswa/detail':
-        require_once __DIR__ . '/../app/Controllers/MahasiswaController.php';
+// Ambil path dari URL, buang query string (?nim=... dsb)
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-        $controller = new MahasiswaController();
-        $controller->detail();
-        break;
-
-    case 'dosen':
-        require_once __DIR__ . '/../app/Controllers/DosenController.php';
-
-        $controller = new DosenController();
-        $controller->index();
-        break;
-
-    default:
-        echo "Halaman tidak ditemukan";
-        break;
+// Buang BASE_URL dari depan path, sisanya adalah "nama route"
+if (strpos($uri, BASE_URL) === 0) {
+    $uri = substr($uri, strlen(BASE_URL));
 }
+$uri = trim($uri, '/');
+
+if ($uri === '') {
+    $uri = 'login';
+}
+
+// Jika route tidak terdaftar -> 404
+if (!array_key_exists($uri, $routes)) {
+    http_response_code(404);
+    echo "Halaman tidak ditemukan";
+    exit;
+}
+
+$route = $routes[$uri];
+
+// Jalankan middleware yang terdaftar pada route ini
+foreach ($route['middleware'] as $middlewareClass) {
+    $middleware = new $middlewareClass();
+    $middleware->handle();
+}
+
+// Load & jalankan Controller
+require_once __DIR__ . '/../app/Controllers/' . $route['controller'] . '.php';
+
+$controllerClass = $route['controller'];
+$controller = new $controllerClass();
+
+$method = $route['method'];
+$controller->$method();
