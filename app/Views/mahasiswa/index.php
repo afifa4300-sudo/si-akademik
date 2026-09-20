@@ -21,7 +21,6 @@
         <th>Nama</th>
         <th>Program Studi</th>
         <th>Aksi</th>
-        <th>Dosen Pembimbing</th>
     </tr>
 
     <?php foreach ($mahasiswa as $mhs): ?>
@@ -34,6 +33,7 @@
                     Detail
                 </a>
             </td>
+            <td><?= htmlspecialchars($mhs['nama_dosen'] ?? '-'); ?></td>
         </tr>
     <?php endforeach; ?>
 </table>
