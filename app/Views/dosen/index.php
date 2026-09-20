@@ -1,35 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Data Dosen</title>
 </head>
 <body>
-
-<a href="<?= BASE_URL; ?>/dashboard">Dashboard</a> |
-<a href="<?= BASE_URL; ?>/mahasiswa">Data Mahasiswa</a> |
-<a href="<?= BASE_URL; ?>/dosen">Data Dosen</a> |
-<a href="<?= BASE_URL; ?>/logout">Logout</a>
-
-<br><br>
-
-<h2>DATA DOSEN</h2>
-
-<table border="1" cellpadding="8">
+    <h1>Data Dosen</h1>
+    <a href="/si-akademik/public/dashboard">Dashboard</a>
+    <table border="1" cellpadding="8" cellspacing="0">
     <tr>
-        <th>NIDN</th>
-        <th>Nama</th>
-        <th>Program Studi</th>
+    <th>No</th>
+    <th>NIDN</th>
+    <th>Nama</th>
+    <th>Bidang Keahlian</th>
     </tr>
-
-    <?php foreach ($dosen as $dsn): ?>
-        <tr>
-            <td><?= $dsn['nidn']; ?></td>
-            <td><?= $dsn['nama']; ?></td>
-            <td><?= $dsn['prodi']; ?></td>
-        </tr>
+    <?php foreach ($dosen as $index => $item): ?>
+    <tr>
+    <td><?= $index + 1 ?></td>
+    <td><?= htmlspecialchars($item['nidn']) ?></td>
+    <td><?= htmlspecialchars($item['nama']) ?></td>
+    <td><?= htmlspecialchars($item['bidang_keahlian']) ?></td>
+    </tr>
     <?php endforeach; ?>
-
-</table>
-
+    </table>
 </body>
 </html>
