@@ -7,22 +7,35 @@
 <body>
     <h1>Data Dosen</h1>
     <a href="<?= BASE_URL; ?>/dashboard">Dashboard</a>
-    <a href="<?= BASE_URL; ?>/logout">Logout</a>
+
+    <br><br>
+
+    <a href="<?= BASE_URL; ?>/dosen/create">Tambah Dosen</a>
+
+    <br><br>
+
     <table border="1" cellpadding="8" cellspacing="0">
-    <tr>
-    <th>No</th>
-    <th>NIDN</th>
-    <th>Nama</th>
-    <th>Bidang Keahlian</th>
-    </tr>
-    <?php foreach ($dosen as $index => $item): ?>
-    <tr>
-    <td><?= $index + 1 ?></td>
-    <td><?= htmlspecialchars($item['nidn']) ?></td>
-    <td><?= htmlspecialchars($item['nama']) ?></td>
-    <td><?= htmlspecialchars($item['bidang_keahlian']) ?></td>
-    </tr>
-    <?php endforeach; ?>
+        <tr>
+            <th>No</th>
+            <th>NIDN</th>
+            <th>Nama</th>
+            <th>Bidang Keahlian</th>
+            <th>Aksi</th>
+        </tr>
+        <?php foreach ($dosen as $index => $item): ?>
+        <tr>
+            <td><?= $index + 1 ?></td>
+            <td><?= htmlspecialchars($item['nidn']) ?></td>
+            <td><?= htmlspecialchars($item['nama']) ?></td>
+            <td><?= htmlspecialchars($item['bidang_keahlian']) ?></td>
+            <td>
+                <a href="<?= BASE_URL; ?>/dosen/edit?id=<?= $item['id'] ?>">Edit</a>
+                |
+                <a href="<?= BASE_URL; ?>/dosen/delete?id=<?= $item['id'] ?>"
+                   onclick="return confirm('Hapus data ini?')">Hapus</a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
     </table>
 </body>
 </html>
