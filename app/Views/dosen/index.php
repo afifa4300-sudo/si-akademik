@@ -6,7 +6,8 @@
 </head>
 <body>
     <h1>Data Dosen</h1>
-    <a href="/si-akademik/public/dashboard">Dashboard</a>
+    <a href="<?= BASE_URL; ?>/dashboard">Dashboard</a>
+    <a href="<?= BASE_URL; ?>/logout">Logout</a>
     <table border="1" cellpadding="8" cellspacing="0">
     <tr>
     <th>No</th>

@@ -12,7 +12,7 @@
 <ul>
     <li><a href="<?= BASE_URL; ?>/mahasiswa">Mahasiswa</a></li>
     <li><a href="<?= BASE_URL; ?>/logout">Logout</a></li>
-    <li><a href="/si-akademik/public/dosen">Data Dosen</a></li>
+    <li><a href="<?= BASE_URL; ?>/dosen">Data Dosen</a></li>
 </ul>
 
 </body>
