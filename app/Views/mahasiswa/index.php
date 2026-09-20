@@ -21,6 +21,7 @@
         <th>Nama</th>
         <th>Program Studi</th>
         <th>Aksi</th>
+        <th>Dosen Pembimbing</th>
     </tr>
 
     <?php foreach ($mahasiswa as $mhs): ?>
