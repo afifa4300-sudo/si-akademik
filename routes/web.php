@@ -48,6 +48,42 @@ if ($url === 'mahasiswa/detail' && isset($_GET['nim'])) {
     exit;
 }
 
+if ($url === 'mahasiswa/create') {
+    AuthMiddleware::handle();
+    $controller = new MahasiswaController();
+    $controller->create();
+    exit;
+}
+
+if ($url === 'mahasiswa/store' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    AuthMiddleware::handle();
+    $controller = new MahasiswaController();
+    $controller->store();
+    exit;
+}
+
+if ($url === 'mahasiswa/edit' && isset($_GET['nim'])) {
+    AuthMiddleware::handle();
+    $controller = new MahasiswaController();
+    $controller->edit($_GET['nim']);
+    exit;
+}
+
+if ($url === 'mahasiswa/update' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    AuthMiddleware::handle();
+    $controller = new MahasiswaController();
+    $controller->update($_POST['nim']);
+    exit;
+}
+
+if ($url === 'mahasiswa/delete' && isset($_GET['nim'])) {
+    AuthMiddleware::handle();
+    $controller = new MahasiswaController();
+    $controller->delete($_GET['nim']);
+    exit;
+}
+
+
 // ---------- Dosen ----------
 if ($url === 'dosen') {
     AuthMiddleware::handle();
