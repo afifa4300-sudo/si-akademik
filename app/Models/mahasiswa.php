@@ -2,33 +2,66 @@
 
 class Mahasiswa
 {
-    private $pdo;
+    private ?string $nim;
+    private ?string $nama;
+    private ?string $prodi;
+    private ?int $dosenId;
+    private ?string $namaDosen = null; // hasil JOIN, khusus untuk ditampilkan
 
-    public function __construct($pdo)
+    public function __construct(?string $nim = null, ?string $nama = null, ?string $prodi = null, $dosenId = null)
     {
-        $this->pdo = $pdo;
+        $this->setNim($nim);
+        $this->setNama($nama);
+        $this->setProdi($prodi);
+        $this->setDosenId($dosenId);
     }
 
-    public function getAll()
-    {
-        $sql = "SELECT mahasiswa.*, dosen.nama AS nama_dosen
-                FROM mahasiswa
-                LEFT JOIN dosen ON mahasiswa.dosen_id = dosen.id
-                ORDER BY mahasiswa.nama ASC";
+    // ---------- Getter ----------
+    public function getNim(): ?string { return $this->nim; }
+    public function getNama(): ?string { return $this->nama; }
+    public function getProdi(): ?string { return $this->prodi; }
+    public function getDosenId(): ?int { return $this->dosenId; }
+    public function getNamaDosen(): ?string { return $this->namaDosen; }
 
-        $stmt = $this->pdo->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // ---------- Setter + Validasi ----------
+    public function setNim(?string $nim): void
+    {
+        if ($nim !== null && $nim !== '' && !ctype_digit($nim)) {
+            throw new InvalidArgumentException('NIM harus berupa angka.');
+        }
+        $this->nim = $nim;
     }
 
-    public function getByNim($nim)
+    public function setNama(?string $nama): void
     {
-        $sql = "SELECT mahasiswa.*, dosen.nama AS nama_dosen
-                FROM mahasiswa
-                LEFT JOIN dosen ON mahasiswa.dosen_id = dosen.id
-                WHERE mahasiswa.nim = :nim";
+        if ($nama === null || trim($nama) === '') {
+            throw new InvalidArgumentException('Nama mahasiswa tidak boleh kosong.');
+        }
+        $this->nama = $nama;
+    }
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['nim' => $nim]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+    public function setProdi(?string $prodi): void
+    {
+        $this->prodi = $prodi;
+    }
+
+    public function setDosenId($dosenId): void
+    {
+        $this->dosenId = ($dosenId === '' || $dosenId === null) ? null : (int) $dosenId;
+    }
+
+    public function setNamaDosen(?string $namaDosen): void
+    {
+        $this->namaDosen = $namaDosen;
+    }
+
+    // ---------- Helper konversi ----------
+    public static function fromArray(array $row): self
+    {
+        $entity = new self($row['nim'], $row['nama'], $row['prodi'], $row['dosen_id'] ?? null);
+        if (!empty($row['nama_dosen'])) {
+            $entity->setNamaDosen($row['nama_dosen']);
+        }
+        return $entity;
     }
 }
