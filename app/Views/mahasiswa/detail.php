@@ -14,9 +14,10 @@
 
 <h2>Detail Mahasiswa</h2>
 
-<p><strong>NIM:</strong> <?= $data['nim']; ?></p>
-<p><strong>Nama:</strong> <?= $data['nama']; ?></p>
-<p><strong>Program Studi:</strong> <?= $data['prodi']; ?></p>
+<p><strong>NIM:</strong> <?= htmlspecialchars($data->getNim()); ?></p>
+<p><strong>Nama:</strong> <?= htmlspecialchars($data->getNama()); ?></p>
+<p><strong>Program Studi:</strong> <?= htmlspecialchars($data->getProdi()); ?></p>
+<p><strong>Dosen Pembimbing:</strong> <?= htmlspecialchars($data->getNamaDosen() ?? '-'); ?></p>
 
 <br>
 
